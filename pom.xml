@@ -42,6 +42,9 @@
     <sonar.cpp.file.suffixes>-</sonar.cpp.file.suffixes>
     <sonar.objc.file.suffixes>-</sonar.objc.file.suffixes>
     <failOnJavadocErrors>true</failOnJavadocErrors>
+    <jarsigner.certchain>${maven.multiModuleProjectDirectory}/certchain.txt</jarsigner.certchain>
+    <jarsigner.skip>true</jarsigner.skip>
+    <tsaurl>http://timestamp.digicert.com/</tsaurl>
   </properties>
 
   <!-- 
@@ -50,6 +53,18 @@
     and that parent pom also has fuller individual-bundle profile 
     defined that is combined with this one. -->
   <profiles>
+    <profile>
+      <id>patch-build</id>
+      <activation>
+        <property>
+          <name>patch-build</name>
+        </property>
+      </activation>
+      <properties>
+        <!-- Keep the locally built artifact instead of replacing it from the baseline. -->
+        <tycho.baseline.replace>none</tycho.baseline.replace>
+      </properties>
+    </profile>
     <profile>
       <id>build-individual-bundles</id>
       <repositories>
@@ -179,6 +194,40 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <!-- Declared last so it dominates the OS-activated profiles when their plugin
+           configurations are merged. Activated only for the patch build, so normal SWT dev
+           builds stay host-only. The org.eclipse.swt.fork.bundles feature republishes the
+           SWT host and every platform fragment, so all environments must be in the target
+           platform regardless of the build host OS. combine.children="append" keeps (not
+           replaces) the host environment contributed by the active OS profile. -->
+      <id>fork-bundle-environments</id>
+      <activation>
+        <property>
+          <name>patch-build</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>target-platform-configuration</artifactId>
+            <configuration>
+              <environments combine.children="append">
+                <environment><os>win32</os><ws>win32</ws><arch>x86_64</arch></environment>
+                <environment><os>win32</os><ws>win32</ws><arch>aarch64</arch></environment>
+                <environment><os>linux</os><ws>gtk</ws><arch>x86_64</arch></environment>
+                <environment><os>linux</os><ws>gtk</ws><arch>aarch64</arch></environment>
+                <environment><os>linux</os><ws>gtk</ws><arch>ppc64le</arch></environment>
+                <environment><os>linux</os><ws>gtk</ws><arch>riscv64</arch></environment>
+                <environment><os>macosx</os><ws>cocoa</ws><arch>x86_64</arch></environment>
+                <environment><os>macosx</os><ws>cocoa</ws><arch>aarch64</arch></environment>
+              </environments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
 
@@ -193,5 +242,7 @@
     <module>examples/org.eclipse.swt.examples.views</module>
     <module>tests/org.eclipse.swt.tests</module>
     <module>features/org.eclipse.swt.tools.feature</module>
+    <module>features/org.eclipse.swt.fork.bundles</module>
+    <module>update-site</module>
   </modules>
 </project>

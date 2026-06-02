@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.swt.fork.bundles"
+      label="SWT Fork Bundles"
+      version="1.0.0.qualifier"
+      provider-name="Portfolio Performance">
+
+   <!--
+      Plain aggregation feature whose only purpose is to get the re-qualified SWT host
+      bundle and all platform fragments published into this update-site. The patched fix
+      lives in the cocoa fragment; the host and the non-cocoa fragments are upstream
+      content republished under the bumped qualifier. The actual feature PATCH that
+      redirects org.eclipse.e4.rcp's exact pins to these bundles lives in Portfolio
+      Performance (where e4.rcp is a product root and the patch resolves). Tycho cannot
+      assemble a bare feature patch into a standalone p2 repository (eclipse-tycho/tycho
+      issue 893).
+   -->
+   <plugin
+         id="org.eclipse.swt"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.win32.win32.x86_64"
+         os="win32"
+         ws="win32"
+         arch="x86_64"
+         fragment="true"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.win32.win32.aarch64"
+         os="win32"
+         ws="win32"
+         arch="aarch64"
+         fragment="true"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.gtk.linux.x86_64"
+         os="linux"
+         ws="gtk"
+         arch="x86_64"
+         fragment="true"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.gtk.linux.aarch64"
+         os="linux"
+         ws="gtk"
+         arch="aarch64"
+         fragment="true"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.gtk.linux.ppc64le"
+         os="linux"
+         ws="gtk"
+         arch="ppc64le"
+         fragment="true"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.gtk.linux.riscv64"
+         os="linux"
+         ws="gtk"
+         arch="riscv64"
+         fragment="true"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.cocoa.macosx.x86_64"
+         os="macosx"
+         ws="cocoa"
+         arch="x86_64"
+         fragment="true"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.cocoa.macosx.aarch64"
+         os="macosx"
+         ws="cocoa"
+         arch="aarch64"
+         fragment="true"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
