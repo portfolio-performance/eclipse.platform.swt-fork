@@ -42,6 +42,38 @@
                     </dependency-resolution>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jarsigner-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>sign</id>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>${jarsigner.skip}</skip>
+                    <certs>true</certs>
+                    <verbose>true</verbose>
+                    <keystore>NONE</keystore>
+                    <storetype>PKCS11</storetype>
+                    <providerClass>sun.security.pkcs11.SunPKCS11</providerClass>
+                    <storepass>${jarsigner.storepass}</storepass>
+                    <alias>${jarsigner.alias}</alias>
+                    <providerArg>${jarsigner.providerArg}</providerArg>
+                    <certchain>${jarsigner.certchain}</certchain>
+                    <tsa>${tsaurl}</tsa>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="org.eclipse.swt.fork.bundles" version="0.0.0">
+      <category name="org.eclipse.swt"/>
+   </feature>
+   <category-def name="org.eclipse.swt" label="SWT"/>
+</site>
