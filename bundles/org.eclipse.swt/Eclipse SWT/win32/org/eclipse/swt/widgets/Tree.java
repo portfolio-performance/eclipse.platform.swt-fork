@@ -7959,7 +7959,7 @@ LRESULT wmNotifyHeader (NMHDR hdr, long wParam, long lParam) {
 							RECT textRect = new RECT();
 							textRect.left = x;
 							textRect.top = rects[i].top;
-							textRect.right = rects[i].right;
+							textRect.right = rects[i].right - (x - rects[i].left);
 							textRect.bottom = rects[i].bottom;
 							OS.DrawText (nmcd.hdc, buffer, buffer.length, textRect, flags);
 						}
